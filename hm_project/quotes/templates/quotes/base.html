@@ -17,14 +17,10 @@
         <div class="col-md-8">
             <h1><a href="/" style="text-decoration: none">Quotes to Scrape</a></h1>
         </div>
-        <!--        <div class="col-md-4">-->
-        <!--            <p><a class="btn btn-primary" href="/logout">SignUp</a></p>-->
-        <!--            <p><a class="btn btn-primary" href="/login">Login</a></p>-->
-        <!--            <p><a class="btn btn-danger" href="/logout">Logout</a></p>-->
-        <!--        </div>-->
         {% if user.is_authenticated %}
         <div class="col-md-4">
-            <a class="nav-link" href="{% url 'quotes:upload' %}">Upload</a>
+            <a href="{% url 'quotes:add_author' %}" class="btn btn-primary" style="height: 38px">Upload</a>
+            <a href="{% url 'quotes:add_quote' %}" class="btn btn-primary" style="height: 38px">Add quote</a>
             <form action="{% url 'app_auth:logout' %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger" style="margin-right: 15px">Log out</button>

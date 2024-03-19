@@ -9,13 +9,24 @@ class Author(models.Model):
     born_date = models.CharField(max_length=50)
     born_location = models.CharField(max_length=150)
     description = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, default=None)
+
+    def __str__(self):
+        return self.fullname
 
 class Tag(models.Model):
-    name = models.CharField(max_length=30, null=False, unique=True)
+    name = models.CharField(max_length=60, null=False, unique=True)
+
+    class Meta:
+        verbose_name_plural = "Tags"
+        verbose_name = "Tag"
+
+    def __str__(self):
+        return self.name
 
 class Quote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
     quote = models.TextField()
     tags = models.ManyToManyField(Tag)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, default=None, null=True)

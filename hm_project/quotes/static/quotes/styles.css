@@ -79,3 +79,11 @@ a.tag:hover {
     color: #000;
     cursor: not-allowed;
 }
+
+.tags-box {
+    text-align: right;
+}
+
+.col-md-4 {
+    width: 33.33333333%;
+}
