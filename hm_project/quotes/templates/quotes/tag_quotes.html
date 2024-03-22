@@ -15,7 +15,10 @@
             <span class="text" itemprop="text"> {{quote.quote}}
                 <span style="float: right;">
                     {% if user.is_authenticated and quote.user == user %}
-                        <button class="btn btn-danger" data-quote-id="{{ quote.id }}">DELETE</button>
+                        <form method="post" action="{% url 'quotes:delete_quote' quote.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit">DELETE</button>
+                        </form>
                     {% endif %}
                 </span>
             </span>
