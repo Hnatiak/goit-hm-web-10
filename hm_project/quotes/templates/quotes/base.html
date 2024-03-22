@@ -14,25 +14,27 @@
 <body>
 <div class="container">
     <div class="row header-box pt-3 mb-3">
-        <div class="col-md-8">
+        <div class="col-md-8" style="padding-bottom: 40px;">
             <h1><a href="/" style="text-decoration: none">Quotes to Scrape</a></h1>
         </div>
-        {% if user.is_authenticated %}
-        <div class="col-md-4">
-            <a href="{% url 'quotes:add_author' %}" class="btn btn-primary" style="height: 38px">Upload</a>
-            <a href="{% url 'quotes:add_quote' %}" class="btn btn-primary" style="height: 38px">Add quote</a>
-            <form action="{% url 'app_auth:logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger" style="margin-right: 15px">Log out</button>
-            </form>
-            {% else %}
-            <a class="btn btn-primary" href="{% url 'app_auth:signup' %}" style="margin-right: 15px">Register</a>
-            <a class="btn btn-primary" href="{% url 'app_auth:signin' %}">Login</a>
-            {% endif %}
+        <div class="col-md-4" style="flex-direction: row-reverse;">
+            <div style="display: flex; gap: 15px">
+                {% if user.is_authenticated %}
+                <a href="{% url 'quotes:add_author' %}" class="btn btn-primary" style="height: 38px">Upload</a>
+                <a href="{% url 'quotes:add_quote' %}" class="btn btn-primary" style="height: 38px">Add quote</a>
+                <form action="{% url 'app_auth:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" style="margin-right: 15px">Log out</button>
+                </form>
+                {% else %}
+                <p style="margin: 0px"><a class="btn btn-primary" href="{% url 'app_auth:signup' %}">Register</a></p>
+                <p style="margin: 0px"><a class="btn btn-primary" href="{% url 'app_auth:signin' %}">Login</a></p>
+                {% endif %}
+            </div>
         </div>
-        {% block content %}
-        {% endblock %}
-    </div>
+            {% block content %}
+            {% endblock %}
+        </div>
 </div>
 </body>
 </html>
