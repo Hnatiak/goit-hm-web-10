@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from .forms import AuthorForm, QuoteForm
 from .models import Author, Quote, Tag
 from django.views import View
@@ -11,7 +11,7 @@ from .utils import get_mongodb
 
 def main(request, page=1):
     db = get_mongodb()
-    quotes = db.quotes.find()
+    quotes = Quote.objects.all()
     per_page = 10
     paginator = Paginator(list(quotes), per_page)
     quotes_on_page = paginator.page(page)
@@ -20,12 +20,9 @@ def main(request, page=1):
 
 
 
-def author_detail(request, author_name):
-    author = Author.objects.get(fullname=author_name)
-    if not author:
-        author = None
-    print(author)
-    return render(request, "quotes/author_detail.html", context={"author": author})
+def author_detail(request, id):
+  author = Author.objects.get(pk=id)
+  return render(request, 'quotes/author_detail.html', context={'author': author})
 
 
 @login_required
@@ -79,7 +76,6 @@ def add_author(request):
         form = AuthorForm()
 
     return render(request, "quotes/add_author.html", {"form": form})
-
 
 class TagQuotesView(View):
     template_name = 'quotes/tag_quotes.html'
